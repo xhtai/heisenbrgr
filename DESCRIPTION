@@ -1,0 +1,17 @@
+Package: heisenbrgr
+Title: Linking Accounts on Anonymous Marketplaces
+Version: 0.0.0.9000
+Authors@R: person("Xiao Hui", "Tai", email = "xtai@andrew.cmu.edu", role = c("aut", "cre"))
+Description: Processes web scrapes of anonymous marketplaces and links accounts that belong to the same seller. This is work in progress.
+URL: https://github.com/xhtai/heisenbrgr
+Depends:
+    R (>= 3.0)
+Imports:
+	magrittr,
+	dplyr,
+	methods,
+	Matrix
+Suggests:
+License: GPL-3
+LazyData: true
+RoxygenNote: 6.1.0
