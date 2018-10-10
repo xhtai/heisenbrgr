@@ -25,14 +25,69 @@ You can install `heisenbrgr` from github with:
 devtools::install_github("xhtai/heisenbrgr")
 ```
 
+## Data
+We will need feedback data, item data and user data. 
+
+- Feedback data should be unique feedback entries (timestamped), that can be matched to their corresponding item listings. We also want the amount transacted. 
+- Item data should be unique items with item titles, that can be matched to the corresponding vendor account. We also want the predicted category for the item title (e.g. cannabis, benzos, digital goods, etc.). 
+- User data should be unique users with IDs, marketplaces, most common category sold, and diversity of products. 
+
+Additionally, we also want raw, timestamped scrapes of profiles and item listings. This is to extract profile and item descriptions, as well as PGP keys.
+
+Note that if you have some subset of these variables, the analysis can still be done, with some modifications. At a minimum, this is what we need:
+
+- Unique feedback entries (timestamped), that can be matched to their corresponding item listings
+- Unique item titles, that can be matched to the corresponding vendor account
+- Unique users with IDs and marketplaces
+- Some means of extracting PGP keys (e.g. from user profiles, item descriptions)
+
 ## Steps in analysis
 The R files are broken down into four steps, 1. clean data, 2. generate account level information, 3. generate pairwise comparisons, 4. run model.
 
 ### Step 1: Clean data
-TODO
+Given the data as described in the Data section (above), we prepare this for further analysis. In particular,
+
+For feedback data:
+
+- add `vendor_hash` to link to users data, and delete rows that don't have a match
+
+For items data:
+
+- delete items that don't have any feedback (we won't be analyzing these anyway)
+- extract inventories:
+    - `category`: predicted category, same as in users data
+    - `dosage` (number + unit, e.g. "8g"): number of grams, ounces, pounds, milligrams, micrograms
+    - `unit` (numeric): number of pills, tabs, tablets, blotters, or beginning quantity in item title
+
+For users data:
+
+- delete rows that have no match in feedback data (we won't be analyzing these anyway)
+
+`Step1a_cleanData.R` does the above, producing `feedback`, `users`, `items` that can be used in Step 2. If we have raw, timestamped scrapes of profiles and item listings, we continue with the following processing.
+
+Raw, timestamped scrapes of profiles:
+
+- first match to users by paste0(marketplace, ID) and remove any non-matches
+- remove those with both profile information and PGP missing (we want either)
+- columns: "date", "id", "profile", "PGP"
+- extract PGP key for non-alphabay entries
+- remove duplicates
+	- make sure that at one date there is a single entry – cat the profiles (for alphabay check that PGP keys are the same)
+- remove those that clearly have no information, e.g. "\\n-----\\n", "-----"
+
+Raw, timestamped scrapes of item listings:
+
+- first match to items by paste0(marketplace, ID, title) and remove any non-matches
+- remove those that are unmatched, or with missing information in all of the fields that we are interested in
+- remove duplicates
+	- make sure that at one date there is a single entry -- cat the descriptions
+- special processing
+	- SR2:  "Overall Average ... description" -- remove these.
+	- Agora: gets this BTC \n \n sequence -- remove this 
+
 
 ### Step 2: Generating account level information
-In this step we generate account level information given some time period of interest. In order to do so we would need the following cleaned data sets. The structure of these data sets is given in the reference section below.
+In this step we generate account level information given some time period of interest. In order to do so we would need the following cleaned data sets, generated from Step 1. The structure of these data sets is given in the reference section below.
 
 - `feedback` (timestamped)
 - `users`: unique user/vendor accounts
