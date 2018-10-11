@@ -199,7 +199,7 @@ consolidateCols <- function(itemsTuple) {
 #' Given users data, at least with columns `hash_str`, `marketplace`, `id`,
 #' `diversity`, delete rows that have no match in feedback data
 #'
-#' @param users name of dataframe with unique items, as described above
+#' @param users name of dataframe with unique user accounts, as described above
 #' @param feedback name of dataframe with feedback data containing `vendor_hash`
 #' @return dataframe with usable feedback data
 #' @export

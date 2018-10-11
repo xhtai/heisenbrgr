@@ -38,7 +38,7 @@ Steps in analysis
 
 The R files are broken down into four steps, 1. clean data, 2. generate account level information, 3. generate pairwise comparisons, 4. run model.
 
-### Step 1: Clean data
+### Step 1a: Clean feedback, items and users data
 
 Given the data as described in the Data section (above), we prepare this for further analysis. In particular,
 
@@ -53,7 +53,6 @@ For items data:
     -   `category`: predicted category, same as in users data
     -   `dosage` (number + unit, e.g. "8g"): number of grams, ounces, pounds, milligrams, micrograms
     -   `unit` (numeric): number of pills, tabs, tablets, blotters, or beginning quantity in item title
--   (any other data peculiarities, e.g. SR2 titles were processed and we get the raw titles back)
 
 For users data:
 
@@ -61,25 +60,23 @@ For users data:
 
 `Step1a_cleanData.R` does the above, producing `feedback`, `users`, `items` that can be used in Step 2. If we have raw, timestamped scrapes of profiles and item listings, we continue with the following processing.
 
-Raw, timestamped scrapes of profiles:
+### Step 1b: Clean raw, timestamped scrapes of profiles and item listings
 
--   first match to users by paste0(marketplace, ID) and remove any non-matches
--   remove those with both profile information and PGP missing (we want either)
--   columns: "date", "id", "profile", "PGP"
--   extract PGP key for non-alphabay entries
--   remove duplicates
-    -   make sure that at one date there is a single entry – cat the profiles (for alphabay check that PGP keys are the same)
--   remove those that clearly have no information, e.g. "\\n-----\\n", "-----"
+Raw, timestamped scrapes of profiles: this should conatain columns `marketplace`, `date`, `id`, `profile`, which can be matched to the `users` data using `marketplace` and `id`. `Profile` column should contain profile descriptions and PGP keys, if any.
 
-Raw, timestamped scrapes of item listings:
+-   First remove rows with missing information, or duplicated rows
+-   Match to users by marketplace and ID, and remove any non-matches
+-   Extract PGP keys
+-   Remove duplicates and those that clearly have no information, e.g. "\\n-----\\n", "-----"
+-   make sure that at one date there is a single entry – cat the profiles (for alphabay check that PGP keys are the same) --- check: I don't think this was done
 
--   first match to items by paste0(marketplace, ID, title) and remove any non-matches
--   remove those that are unmatched, or with missing information in all of the fields that we are interested in
--   remove duplicates
-    -   make sure that at one date there is a single entry -- cat the descriptions
--   special processing
-    -   SR2: "Overall Average ... description" -- remove these.
-    -   Agora: gets this BTC sequence -- remove this
+Raw, timestamped scrapes of item listings: this should conatain columns `marketplace`, `date`, `seller_id`, `title`, `listing_description`, which can be matched to the `items` data using `marketplace`, `seller_id` and `title`. `listing_description` column should contain item listing descriptions and PGP keys, if any. The processing is analogous to the profile scrapes.
+
+-   First remove rows with missing information, or duplicated rows -- Match to items by marketplace, ID and description, and remove any non-matches
+-   Extract PGP keys
+-   Remove duplicates and those that clearly have no information, e.g. "\\n-----\\n", "-----"
+
+`Step1b_cleanParsedData.R` does the above, producing `profileClean`, `descriptionClean`, `PGPclean` that can be used in Step 2. Note that additional pre-processing may be desirable, for example there is filler text in some descriptions (e.g. in SR2: "Overall Average ... description"), and it would be beneficial to remove these.
 
 ### Step 2: Generating account level information
 

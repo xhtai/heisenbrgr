@@ -7,7 +7,7 @@
 cleanUsers(users, feedback)
 }
 \arguments{
-\item{users}{name of dataframe with unique items, as described above}
+\item{users}{name of dataframe with unique user accounts, as described above}
 
 \item{feedback}{name of dataframe with feedback data containing `vendor_hash`}
 }
