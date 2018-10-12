@@ -74,8 +74,8 @@ infoFromFeedback <- function(feedback, startDate, endDate) {
     # (note that there is a slight discrepancy: for vendors daysActive counted all days between first and last)
 
     marketplaceOut <- feedbackSubset %>%
-        group_by(marketplace) %>%
-            summarize(marketplaceTotalFeedback = length(hash_str),
+        dplyr::group_by(marketplace) %>%
+            dplyr::summarize(marketplaceTotalFeedback = length(hash_str),
                       marketplaceDaysActive = length(unique(date))
             )
     marketplaceOut$scale <- marketplaceOut$marketplaceTotalFeedback/marketplaceOut$marketplaceDaysActive

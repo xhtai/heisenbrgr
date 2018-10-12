@@ -26,7 +26,7 @@ cleanParsedUsers <- function(parsedUsers, users) {
     parsedUsers$vendor_hash <- users$hash_str[match(parsedUsers$marketplaceID, users$marketplaceID)]
 
     parsedUsers$profileClean <- NA
-    retrievedPGPs <- data.frame(date = NA, vendor_hash = NA, PGPclean = NA, stringsAsFactors = FALSE)
+    retrievedPGPs <- data.frame(date = numeric(), vendor_hash = character(), PGPclean = character(), stringsAsFactors = FALSE)
 
     # extract PGP and then check for duplicates again
     for (i in 1:nrow(parsedUsers)) {
@@ -65,7 +65,7 @@ cleanParsedUsers <- function(parsedUsers, users) {
 
 extractPGPs <- function(inputString) {
 
-    retrievedPGPs <- NA
+    retrievedPGPs <- c()
     pat <- "-*?BEGIN PGP PUBLIC KEY BLOCK.*?END PGP PUBLIC KEY BLOCK-*?"
     PGP <- regmatches(inputString, regexpr(pat, inputString)) # if no match, character(0) # gets the first match.
     outputString <- inputString
@@ -142,7 +142,7 @@ cleanParsedItems <- function(parsedItems, items) {
     parsedItems <- parsedItems[!is.na(parsedItems$item_hash), c("marketplace", "date", "listing_description", "item_hash", "vendor_hash")]
 
     parsedItems$descriptionClean <- NA
-    retrievedPGPs <- data.frame(date = NA, vendor_hash = NA, PGPclean = NA, stringsAsFactors = FALSE)
+    retrievedPGPs <- data.frame(date = numeric(), vendor_hash = character(), PGPclean = character(), stringsAsFactors = FALSE)
 
     # extract PGP and then check for duplicates again
     for (i in 1:nrow(parsedItems)) {
@@ -155,7 +155,7 @@ cleanParsedItems <- function(parsedItems, items) {
         }
     }
 
-    parsedItems <- parsedItems[duplicated(parsedUsers[, c("date", "item_hash", "vendor_hash", "descriptionClean")]) == FALSE, c("date", "item_hash", "vendor_hash", "descriptionClean")]
+    parsedItems <- parsedItems[duplicated(parsedItems[, c("date", "item_hash", "vendor_hash", "descriptionClean")]) == FALSE, c("date", "item_hash", "vendor_hash", "descriptionClean")]
     noInfoVec <- sapply(parsedItems$descriptionClean, FUN = noInfo)
     parsedItems <- parsedItems[noInfoVec == FALSE, ]
 

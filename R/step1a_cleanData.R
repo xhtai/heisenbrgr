@@ -98,8 +98,8 @@ addGreppedPatterns <- function(itemsTuple) {
 extractPattern <- function(items, pat) {
 
     out <- rep(NA, length(items$hash_str))
-    indices <- grep(pat, itemsTuple$title, ignore.case = TRUE)
-    out[indices] <- regmatches(itemsTuple$title[indices], regexpr(pat, itemsTuple$title[indices], ignore.case = TRUE))
+    indices <- grep(pat, items$title, ignore.case = TRUE)
+    out[indices] <- regmatches(items$title[indices], regexpr(pat, items$title[indices], ignore.case = TRUE))
 
     return(out)
 }
