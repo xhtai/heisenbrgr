@@ -13,6 +13,6 @@ noInfo(inputString)
 logical, TRUE if no useful information.
 }
 \description{
-If an input string has only whitespace, "\n" or "-", return TRUE and
+If an input string has only whitespace, \\n or "-", return TRUE and
 otherwise, return FALSE.
 }

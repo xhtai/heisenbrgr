@@ -113,7 +113,7 @@ Following this above analysis, `allPairwise` should have 34 variables in total, 
 
 ### Step 4: Model
 
-TODO
+This step uses random forests and hierarchical clustering to generate predictions for all pairs, then clusters of accounts that belong to the same seller.
 
 ### Example Code
 
@@ -132,6 +132,16 @@ outStep2 <- runStep2(outStep1$feedback, outStep1$items, outStep1$users, outStep1
 
 #### Step 3
 allPairwise <- runStep3(outStep2$final, outStep2$profileTokens, outStep2$titleTokens, outStep2$descriptionTokens, outStep2$inventory, outStep2$PGPlist)
+
+#### Step 4
+# this subset of the data happened to have no PGP matches, so we have to insert them for demonstrative purposes
+set.seed(0)
+tmp <- sample(1:nrow(allPairwise), size = .01*nrow(allPairwise), replace = FALSE)
+allPairwise$PGPmatched[tmp] <- 1
+##
+
+results <- predictRF(allPairwise, c(9:17, 19:34))
+clustResults <- hierarchical(rbind(subset(results$out, select = -PGPmatched), results$outTest), outStep2$final)
 ```
 
 For reference: structure of data sets

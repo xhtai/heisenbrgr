@@ -10,7 +10,8 @@ Imports:
 	magrittr,
 	dplyr,
 	methods,
-	Matrix
+	Matrix,
+	randomForest
 Suggests:
 License: GPL-3
 LazyData: true

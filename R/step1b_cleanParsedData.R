@@ -90,7 +90,7 @@ extractPGPs <- function(inputString) {
 
 #' Check if an input string has useful information
 #'
-#' If an input string has only whitespace, "\n" or "-", return TRUE and
+#' If an input string has only whitespace, \\n or "-", return TRUE and
 #' otherwise, return FALSE.
 #'
 #' @param inputString string to check
