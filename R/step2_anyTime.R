@@ -6,7 +6,6 @@
 #' \itemize{
 #'     \item{`hash_str`: this is a unique identifier for each feedback}
 #'     \item{`date`: date that the feedback was left}
-#'     \item{`vendor_hash`: unique identifier for seller account}
 #'     \item{`item_hash`: unique identifier for item that feedback was left for}
 #'     \item{`marketplace`: marketplace that the feedback was left on}
 #'     \item{`order_amount_usd`: cost of item that feedback was left for}
@@ -445,7 +444,7 @@ generateDescriptionTokens <- function(descriptionCleanSubset, userHashesOfIntere
 #' Get list of PGP keys for each account in some timeframe of interest, from
 #' scrapes of profiles and item descriptions
 #'
-#' PGP scrapes data are extracted from profile and item scrapes, and needs to
+#' PGP data are extracted from profile and item scrapes, and needs to
 #' contain the following variables:
 #' \itemize{
 #'     \item{`date`: date that scrape was done, in UNIX time}

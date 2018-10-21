@@ -72,14 +72,9 @@ Raw, timestamped scrapes of profiles: this should conatain columns `marketplace`
 - Match to users by marketplace and ID, and remove any non-matches
 - Extract PGP keys
 - Remove duplicates and those that clearly have no information, e.g. "\\n-----\\n", "-----"
-- make sure that at one date there is a single entry – cat the profiles (for alphabay check that PGP keys are the same) --- check: I don't think this was done
 
-Raw, timestamped scrapes of item listings: this should conatain columns `marketplace`, `date`, `seller_id`, `title`, `listing_description`, which can be matched to the `items` data using `marketplace`, `seller_id` and `title`. `listing_description` column should contain item listing descriptions and PGP keys, if any. The processing is analogous to the profile scrapes.
+Raw, timestamped scrapes of item listings: this should conatain columns `marketplace`, `date`, `seller_id`, `title`, `listing_description`, which can be matched to the `items` data using `marketplace`, `seller_id` and `title`. `listing_description` column should contain item listing descriptions and PGP keys, if any. The processing is analogous to the profile scrapes, with the only difference being that matching is done to items and by marketplace, ID and description
 
-- First remove rows with missing information, or duplicated rows
--- Match to items by marketplace, ID and description, and remove any non-matches
-- Extract PGP keys
-- Remove duplicates and those that clearly have no information, e.g. "\\n-----\\n", "-----"
 
 `Step1b_cleanParsedData.R` does the above, producing `profileClean`, `descriptionClean`, `PGPclean` that can be used in Step 2. Note that additional pre-processing may be desirable, for example there is filler text in some descriptions (e.g. in SR2: "Overall Average ... description"), and it would be beneficial to remove these.
 
