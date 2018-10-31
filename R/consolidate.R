@@ -46,6 +46,7 @@ runStep2 <- function(feedback, items, users, profileClean, descriptionClean, PGP
     descriptionCleanOut <- infoFromDescriptionClean(descriptionClean, out$vendorHashes, out$itemHashes, startDate, endDate)
     PGPout <- generatePGPs(PGPclean, out$vendorHashes, startDate, endDate)
 
+    usersOut <- usersOut[match(out$vendorHashes, usersOut$hash_str), ]
     final <- cbind(out$out, usersOut[, 2:3], numTitleTokens = itemsOut$out[, 2], numProfileTokens = profileCleanOut$out[, 2], numDescriptionTokens = descriptionCleanOut$out[, 2])
 
     ret <- list(final = final, titleTokens = itemsOut$titleTokens, inventory = itemsOut$inventory, profileTokens = profileCleanOut$profileTokens, descriptionTokens = descriptionCleanOut$descriptionTokens, PGPlist = PGPout)

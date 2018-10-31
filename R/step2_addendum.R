@@ -182,4 +182,3 @@ table(numPGPs)
 outStep2$final$numProfileTokens <- unlist(lapply(outStep2$profileTokens, length), use.names = FALSE)
 outStep2$final$numDescriptionTokens <- unlist(lapply(outStep2$descriptionTokens, length), use.names = FALSE)
 
-save(outStep2, file = "/home/xtai/Desktop/tmp_9-5/data_10-15/outStep2Add.Rdata")
