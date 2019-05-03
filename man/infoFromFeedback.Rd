@@ -26,7 +26,6 @@ needs to contain the following variables:
 \itemize{
     \item{`hash_str`: this is a unique identifier for each feedback}
     \item{`date`: date that the feedback was left}
-    \item{`vendor_hash`: unique identifier for seller account}
     \item{`item_hash`: unique identifier for item that feedback was left for}
     \item{`marketplace`: marketplace that the feedback was left on}
     \item{`order_amount_usd`: cost of item that feedback was left for}

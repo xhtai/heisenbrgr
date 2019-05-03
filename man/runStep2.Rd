@@ -19,6 +19,10 @@ runStep2(feedback, items, users, profileClean, descriptionClean, PGPclean,
 \item{descriptionClean}{item descriptions from item scrapes}
 
 \item{PGPclean}{PGP keys from profile and item scrapes}
+
+\item{startDate}{start of the period to be considered, in format "YYYY-MM-DD"}
+
+\item{endDate}{end of the period to be considered}
 }
 \value{
 final, profileTokens, titleTokens, descriptionTokens, inventory, PGPlist

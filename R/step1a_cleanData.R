@@ -78,8 +78,8 @@ addGreppedPatterns <- function(itemsTuple) {
     pounds2 <- extractPattern(itemsTuple, "(one|quarter|full|half)( )?lb|(one|quarter|full|half)( )?pound")
     itemsTuple$pounds[is.na(itemsTuple$pounds)] <- pounds2[is.na(itemsTuple$pounds)]
 
-    ########## mg, ug, µg
-    itemsTuple$milligrams <- extractPattern(itemsTuple, "[0-9./,]+( )?mg|[0-9./,]+( )?ug|[0-9./,]+( )?µg")
+    ########## mg, ug
+    itemsTuple$milligrams <- extractPattern(itemsTuple, "[0-9./,]+( )?mg|[0-9./,]+( )?ug")
 
     ########## pills: 10 Pills, 10 tabs, tablet, blotter
     itemsTuple$pills <- extractPattern(itemsTuple, "[0-9]+( )?x|\\([0-9]+\\)|x( )?[0-9]+ |x( )?[0-9]+$|[0-9]+( )?pill|[0-9]+( )?tab|[0-9]+( )?blotter")

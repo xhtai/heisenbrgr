@@ -35,6 +35,8 @@ runStep1 <- function(feedback, items, users, parsedUsers, parsedItems) {
 #' @param profileClean profile information from profile scrapes
 #' @param descriptionClean item descriptions from item scrapes
 #' @param PGPclean PGP keys from profile and item scrapes
+#' @param startDate start of the period to be considered, in format "YYYY-MM-DD"
+#' @param endDate end of the period to be considered
 #' @return final, profileTokens, titleTokens, descriptionTokens, inventory, PGPlist
 #' @export
 

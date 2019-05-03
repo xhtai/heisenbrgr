@@ -104,7 +104,7 @@ Account-level data sets created by this set of functions: `final` + list items `
 
 From all the account-level information generated in Step 2, generate pairwise similarity measures. Note that this step can also be run if not all of the above data are available, we just have to be careful about which comparisons to do.
 
-Following this above analysis, `allPairwise` should have 34 variables in total, of which 26 are pairwise similarities that can be used as features for classification.
+Following this above analysis, `allPairwise` should have 34 variables in total, of which 25 are pairwise similarities that can be used as features for classification.
 
 ### Step 4: Model
 
@@ -137,6 +137,19 @@ allPairwise$PGPmatched[tmp] <- 1
 
 results <- predictRF(allPairwise, c(9:17, 19:34))
 clustResults <- hierarchical(rbind(subset(results$out, select = -PGPmatched), results$outTest), outStep2$final)
+```
+
+Example model fit
+-----------------
+
+We encourage users to follow the above steps to train a model that is suitable for their own purposes. If this is not an option, the package contains an example model that has been pre-trained using accounts that had at least one feedback received in August 2014. These data were collected by Nicolas Christin's group and a large subset is available from the IMPACT portal (<https://impactcybertrust.org>); the full data will be released shortly. There are a total of 2395 accounts from the following marketplaces: Agora, Alphabay, Black Market Reloaded, Dream, Evolution, Pandora, Silk Road 1, Silk Road 2 and Traderoute. 2135 of these accounts had posted at least one PGP key.
+
+There are 2,278,045 pairwise comparisons, of which 610 are matches. Pairwise features were produced using the procedure described above for the time period 2011-05-22 to 2018-08-22.
+
+The model is stored as a `randomForest` object in `exampleFit`. To generate predictions, users need to have 25 pairwise similarities as input: idDist, sameMarket, profileJaccard, titleJaccard, descriptionJaccard, catJaccard, catDosageJaccard, catUnitJaccard, catDosageUnitJaccard, diff\_numListingsWithFeedback, diff\_totalFeedback, diff\_dailyFrac, diff\_daysActive, diff\_diversity, diff\_meanPriceSold, diff\_medianPriceSold, diff\_minPriceSold, diff\_maxPriceSold, diff\_priceRange, diff\_numDescriptionTokens, diff\_numTitleTokens, diff\_numProfileTokens, diffSalesDates, salesOverlap, totalSalesDays. These are generated in Step 3 as described above. Say these are stored in `mySimilarities`. Predictions can then be generated as follows:
+
+``` r
+testPreds <- predict(exampleFit, mySimilarities, type = "vote")[, 2]
 ```
 
 For reference: structure of data sets
