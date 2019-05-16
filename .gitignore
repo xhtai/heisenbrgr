@@ -1,0 +1,9 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+usingPackageHeis.R
+.*
+!/.gitignore
+packageHashes.Rdata
+exampleFit.Rdata

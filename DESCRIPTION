@@ -11,7 +11,8 @@ Imports:
 	dplyr,
 	methods,
 	Matrix,
-	randomForest
+	randomForest,
+	protoclust
 Suggests:
 License: GPL-3
 LazyData: true
