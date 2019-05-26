@@ -209,3 +209,30 @@ cleanUsers <- function(users, feedback) {
     return(users)
 }
 
+
+
+#' Clean items data (excluding inventory --- dosage and unit)
+#'
+#' Given items data, with columns `hash_str`, `marketplace`, `title`, `vendor`,
+#' `vendor_hash`, `prediction`, extract inventory, i.e. add `dosage` and `unit`.
+#' Delete rows that have no feedback, i.e. no sales, since we will not be
+#' analyzing these.
+#'
+#' @param items name of dataframe with unique items, described above
+#' @param feedback name of dataframe with feedback data, needs at least
+#'   `item_hash`
+#' @return dataframe with usable items data
+#' @export
+
+cleanItems2 <- function(items, feedback) {
+    items <- items[items$hash_str %in% feedback$item_hash, c("hash_str", "marketplace", "title", "vendor", "vendor_hash", "prediction")]
+
+    # get inventory
+    itemsTuple <- items[, c("hash_str", "title", "prediction")]
+    # itemsTuple <- addGreppedPatterns(itemsTuple)
+    # itemsTuple <- consolidateCols(itemsTuple)
+
+    items <- cbind(itemsTuple, items[, c("marketplace", "vendor", "vendor_hash")])
+
+    return(items)
+}

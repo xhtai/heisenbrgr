@@ -94,3 +94,33 @@ runStep3 <- function(final, profileTokens, titleTokens, descriptionTokens, inven
 
     return(allPairwise)
 }
+
+
+#' Run all of step 1 (excluding extracting inventory)
+#'
+#' @param feedback name of dataframe with feedback data
+#' @param items name of dataframe with unique item listings
+#' @param users name of dataframe with unique user accounts
+#' @param parsedUsers name of dataframe with raw profile scrapes
+#' @param parsedItems name of dataframe with raw item scrapes
+#' @return feedback, items, users, profileClean, descriptionClean, PGPclean
+#' @export
+
+runStep1_2 <- function(feedback, items, users, parsedUsers, parsedItems) {
+    feedback <- cleanFeedback(feedback, items)
+    items <- cleanItems2(items, feedback)
+    users <- cleanUsers(users, feedback)
+
+    out <- cleanParsedUsers(parsedUsers, users)
+
+    outItems <- cleanParsedItems(parsedItems, items)
+
+    PGPclean <- rbind(out$retrievedPGPs, outItems$retrievedPGPs)
+    PGPclean <- PGPclean[duplicated(PGPclean) == FALSE, ]
+
+    profileClean <- out$parsedUsers
+    descriptionClean <- outItems$parsedItems
+
+    ret <- list(feedback = feedback, items = items, users = users, profileClean = profileClean, descriptionClean = descriptionClean, PGPclean = PGPclean)
+    return(ret)
+}
