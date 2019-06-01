@@ -3,7 +3,11 @@
 heisenbrgr
 ==========
 
-This is a package to match accounts on anonymous marketplaces, to figure out which of them belong to the same sellers.
+This is a package to match accounts on anonymous marketplaces, to figure out which of them belong to the same sellers. This package is used in the paper
+
+Xiao Hui Tai, Kyle Soska and Nicolas Christin. Adversarial Matching of Dark Net Market Vendor Accounts. 25th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining (KDD), 2019.
+
+Source code for the paper is available at <https://github.com/xhtai/adversarial-matching>.
 
 Installation
 ------------
